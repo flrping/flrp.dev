@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
     title: 'flrp.dev',
-    description: 'a developers portfolio.',
+    description: 'a developers blog.',
 };
 
 export default function RootLayout({

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "GitHub",
+        "type": "Repository",
+        "link": "https://github.com/flrping",
+        "text": "View GitHub Profile"
+    },
+    {
+        "name": "Plugins",
+        "type": "Java",
+        "link": "https://www.spigotmc.org/members/flrping.238558/",
+        "text": "View SpigotMC Profile"
+    },
+    {
+        "name": "Game Development",
+        "type": "C#",
+        "link": "https://flrp.itch.io/",
+        "text": "View Itch.io Profile"
+    },
+    {
+        "name": "LinkedIn",
+        "type": "Social",
+        "link": "https://www.linkedin.com/in/jaelyn-v-58684521b/",
+        "text": "View LinkedIn Profile"
+    }
+]

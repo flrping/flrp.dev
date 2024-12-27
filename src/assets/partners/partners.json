@@ -1,0 +1,14 @@
+[
+    {
+        "name": "BisectHosting",
+        "type": "Host Provider",
+        "link": "https://bisecthosting.com/flrp",
+        "text": "Go to BisectHosting"
+    },
+    {
+        "name": "NordVPN",
+        "type": "VPN Provider",
+        "link": "https://go.nordvpn.net/aff_c?offer_id=15&aff_id=106487&url_id=902",
+        "text": "Go to NordVPN"
+    }
+]
