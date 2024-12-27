@@ -28,21 +28,19 @@ const BlogSection = () => {
     return (
         <div>
             <Container style={{ paddingTop: '10rem', paddingBottom: '5rem', minHeight: '100vh' }}>
-                <h3 className='text-center'>BLOG</h3>
+                <h3 className='text-center mb-5'>BLOG</h3>
                 <Row xs={1} sm={1} md={2} className='g-4'>
-                    {isLoading ? (
-                        Array.from({ length: 4 }).map((_, index) => (
-                            <Col key={index}>
-                                <SkeletonBlogPreview />
-                            </Col>
-                        ))
-                    ) : (
-                        posts.map((post, index) => (
-                            <Col key={post.slug + index}>
-                                <BlogPreview post={post} />
-                            </Col>
-                        ))
-                    )}
+                    {isLoading
+                        ? Array.from({ length: 4 }).map((_, index) => (
+                              <Col key={index}>
+                                  <SkeletonBlogPreview />
+                              </Col>
+                          ))
+                        : posts.map((post, index) => (
+                              <Col key={post.slug + index}>
+                                  <BlogPreview post={post} />
+                              </Col>
+                          ))}
                 </Row>
             </Container>
         </div>

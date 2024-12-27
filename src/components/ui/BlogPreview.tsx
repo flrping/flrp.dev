@@ -10,10 +10,10 @@ const BlogPreview = ({ post }: BlogPreviewProps) => {
     const previewContent = post.content.substring(0, 500).split('.').slice(0, -1).join('.') + '...';
 
     return (
-        <div className='blog-preview'>
-            <Link href={`/blog/${post.slug}`} className='no-underline'>
+        <div className='blog-preview d-flex flex-column'>
+            <Link href={`/blog/${post.slug}`} className='no-underline flex-grow-1 d-flex flex-column'>
                 <h2 className='blog-preview-title'>{post.title}</h2>
-                <div className='blog-preview-content'>
+                <div className='blog-preview-content flex-grow-1'>
                     <ReactMarkdown
                         allowedElements={['p', 'strong', 'em']}
                         components={{

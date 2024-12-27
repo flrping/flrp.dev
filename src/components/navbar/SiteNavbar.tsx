@@ -7,7 +7,7 @@ const SiteNavbar = () => {
             className='py-3'
             expand='lg'
             variant='dark'
-            style={{ backgroundColor: '#212529', width: '100%', position: 'fixed', zIndex: '10' }}
+            style={{ backgroundColor: 'var(--background-secondary)', width: '100%', position: 'fixed', zIndex: '10' }}
         >
             <Container fluid style={{ paddingLeft: '5%', paddingRight: '5%' }}>
                 <Navbar.Brand id='link-color' href='/'>

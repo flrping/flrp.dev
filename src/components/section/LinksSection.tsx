@@ -30,7 +30,7 @@ const LinksSection = () => {
     }, []);
 
     return (
-        <div className='bg-dark'>
+        <div style={{ backgroundColor: 'var(--background-secondary)' }}>
             <Container id='links' style={{ paddingTop: '5rem', paddingBottom: '5rem', minHeight: '20vh' }}>
                 <h3 className='text-center mb-5'>LINKS</h3>
                 <Row xs={1} sm={1} md={2} xxl={3}>
