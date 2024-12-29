@@ -10,7 +10,10 @@
     --foreground-muted-low: #a0a0a073;
     --foreground-secondary: #212529;
     --accent: #ee8f8f;
+    --accent-darker: #ca6e6e;
     --accent-hover: #ca6e6e;
+    --accent-lighter: #f5a1a1;
+    --blog-text-color: #202427;
     font-family: Poppins, sans-serif;
 }
 
@@ -20,6 +23,7 @@
         --background-muted: #212529;
         --background-secondary: #212529;
         --foreground: #ededed;
+        --blog-text-color: #f0f0f0;
         font-family: Poppins, sans-serif;
     }
 }
@@ -85,7 +89,7 @@ h3 {
 
 .project-card-stack {
     line-height: 12px;
-    color: var(--foreground-muted);
+    color: var(--foreground);
     font-weight: normal;
     font-size: 14px;
 }
@@ -281,7 +285,7 @@ h3 {
     color: var(--background);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: normal;
 }
 
@@ -340,11 +344,9 @@ h3 {
 
 .blog-post-body {
 
-    h1 {
-        color: var(--foreground);
-        font-weight: normal;
-        padding-bottom: 15px;
-    }
+    padding: 15px;
+    background-color: var(--background-muted);
+    border-radius: 5px;
 
     h2,
     h3,
@@ -355,7 +357,22 @@ h3 {
         font-weight: normal;
     }
 
+    h2 {
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px dotted var(--foreground-muted-low);
+    }
+
     p {
-        color: var(--foreground);
+        color: var(--blog-text-color);
+    }
+
+    strong {
+        color: var(--accent-lighter);
+        font-weight: normal;
+    }
+
+    em {
+        color: var(--accent-lighter);
     }
 }

@@ -21,9 +21,14 @@ const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
 function parseDirectoryDate(dir: string) {
     const [datePart, timePart] = dir.split('_');
-    const [month, day, year] = datePart.split('-');
+    const [year, month, day] = datePart.split('-');
     const [hour, minute] = timePart.split('-');
-    return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
+
+    const date = new Date();
+    date.setFullYear(Number(year), Number(month) - 1, Number(day));
+    date.setHours(Number(hour), Number(minute), 0, 0);
+    
+    return date;
 }
 
 async function refreshCache(): Promise<CacheData> {

@@ -1,6 +1,7 @@
 import type { Post } from '@/types/blog';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
+import { formatDateTime } from '@/lib/time';
 
 interface BlogPreviewProps {
     post: Post;
@@ -8,6 +9,8 @@ interface BlogPreviewProps {
 
 const BlogPreview = ({ post }: BlogPreviewProps) => {
     const previewContent = post.content.substring(0, 500).split('.').slice(0, -1).join('.') + '...';
+
+    const formattedDate = formatDateTime(new Date(post.date));
 
     return (
         <div className='blog-preview d-flex flex-column'>
@@ -40,20 +43,9 @@ const BlogPreview = ({ post }: BlogPreviewProps) => {
                     {post.date && (
                         <div className='blog-preview-date ms-auto'>
                             Posted on{' '}
-                            <time dateTime={new Date(post.date).toISOString()}>
-                                {new Date(post.date).toLocaleDateString(undefined, {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
-                            </time>
+                            <time dateTime={formattedDate.isoString}>{formattedDate.date}</time>
                             {' at '}
-                            <time dateTime={new Date(post.date).toISOString()}>
-                                {new Date(post.date).toLocaleTimeString(undefined, {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                })}
-                            </time>
+                            <time dateTime={formattedDate.isoString}>{formattedDate.time}</time>
                         </div>
                     )}
                 </div>

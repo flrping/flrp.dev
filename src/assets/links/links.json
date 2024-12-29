@@ -22,5 +22,11 @@
         "type": "Social",
         "link": "https://www.linkedin.com/in/jaelyn-v-58684521b/",
         "text": "View LinkedIn Profile"
+    },
+    {
+        "name": "LeetCode",
+        "type": "Programming",
+        "link": "https://leetcode.com/u/flrp/",
+        "text": "View LeetCode Profile"
     }
 ]
