@@ -1,24 +1,20 @@
-import { NextResponse } from "next/server";
-import type { Partner } from "@/types/generic";
+import { NextResponse } from 'next/server';
+import type { Partner } from '@/types/generic';
+import { Cache } from '@/lib/cache/cache';
 
-let partnersCache: Partner[] = [];
-
-async function getAllPartners() {
-    if (partnersCache.length > 0) {
-        return partnersCache;
-    }
-
-    try {
+const partnersCache = new Cache<Partner[]>({
+    maxSize: 100,
+    ttl: 1000 * 60 * 60,
+    evictionPolicy: 'lru',
+    staleWhileRevalidate: true,
+    revalidateInterval: 1000 * 60 * 5,
+    loader: async () => {
         const partners = await import('@/assets/partners/partners.json');
-        partnersCache = partners.default;
-        return partnersCache;
-    } catch (error) {
-        console.error('Error loading partners:', error);
-        return [];
-    }
-}
+        return partners.default;
+    },
+});
 
 export async function GET() {
-    const partners = await getAllPartners();
+    const partners = await partnersCache.get('partners');
     return NextResponse.json(partners);
 }

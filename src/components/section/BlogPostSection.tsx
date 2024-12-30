@@ -1,65 +1,54 @@
 'use client';
 
-import { getPost } from '@/app/api/posts/route';
-import { useState, useEffect } from 'react';
-import { Post } from '@/types/blog';
+import { fetchPost } from '@/lib/api/fetcher';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
-import { Container } from 'react-bootstrap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { formatDateTime } from '@/lib/time';
+import useSWR from 'swr';
+import { useMemo } from 'react';
+import FadeContainer from '../ui/FadeContainer';
 
 const BlogPostSection = () => {
     const { slug } = useParams();
-    const [post, setPost] = useState<Post | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const { data: post, error, isLoading } = useSWR(`/api/posts/${slug}`, () => fetchPost(slug as string));
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                setIsLoading(true);
-                setError(null);
-                const fetchedPost = await getPost(slug as string);
-                if (!fetchedPost) {
-                    throw new Error('Post not found');
-                }
-                setPost(fetchedPost);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : 'Failed to load post');
-            } finally {
-                setIsLoading(false);
-            }
+    const linkDate = useMemo(() => {
+        if (!post) return null;
+        return (date: Date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hour = String(date.getHours()).padStart(2, '0');
+            const minute = String(date.getMinutes()).padStart(2, '0');
+
+            return `${year}-${month}-${day}_${hour}-${minute}`;
         };
+    }, [post]);
 
-        void fetchPost();
-    }, [slug]);
 
     if (isLoading) {
-        return <div className='blog-post-loading'>Loading...</div>;
+        return (
+            <div
+                className='d-flex justify-content-center align-items-center'
+                style={{ minHeight: 'calc(100vh - 112px)' }}
+            >
+                <div className='spinner-border' role='status'></div>
+            </div>
+        );
     }
 
     const formattedDate = !post ? null : formatDateTime(new Date(post.date));
 
-    function linkDate(date: Date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hour = String(date.getHours()).padStart(2, '0');
-        const minute = String(date.getMinutes()).padStart(2, '0');
-
-        return `${year}-${month}-${day}_${hour}-${minute}`;
-    }
-
     return (
         <div>
-            <Container style={{ paddingTop: '5rem', paddingBottom: '5rem', minHeight: '100vh' }}>
-                {error || !post ? (
+            <FadeContainer isLoading={isLoading}>
+                {error || !post || !linkDate ? (
                     <article className='blog-post mt-5'>
                         <h1 className='blog-post-title'>Post Not Found</h1>
                         <p>
@@ -68,7 +57,22 @@ const BlogPostSection = () => {
                         </p>
                     </article>
                 ) : (
-                    <article className='blog-post'>
+                    <article className='blog-post mt-3'>
+                        {post.banner && (
+                            <div className='blog-post-banner'>
+                                <picture>
+                                    <source
+                                        srcSet={`/api/posts/images?name=banner.webp&post=${linkDate(new Date(post.date))}`}
+                                        type='image/webp'
+                                    />
+                                    <img
+                                        className='blog-post-banner-image'
+                                        src={`/api/posts/images?name=banner.webp&post=${linkDate(new Date(post.date))}`}
+                                        alt='Banner'
+                                    />
+                                </picture>
+                            </div>
+                        )}
                         <header className='blog-post-header'>
                             <div className='d-flex flex-row align-items-center'>
                                 <h1 className='blog-post-title'>{post.title}</h1>
@@ -121,6 +125,18 @@ const BlogPostSection = () => {
                                 rehypePlugins={[rehypeKatex]}
                                 components={{
                                     h1: () => null,
+                                    img: ({ src, alt }) => (
+                                        <picture>
+                                            <source
+                                                srcSet={`/api/posts/images?name=${src}&post=${linkDate(new Date(post.date))}`}
+                                                type='image/webp'
+                                            />
+                                            <img
+                                                src={`/api/posts/images?name=${src}&post=${linkDate(new Date(post.date))}`}
+                                                alt={alt}
+                                            />
+                                        </picture>
+                                    ),
                                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                     code({ node, inline, className, children, ...props }) {
                                         const match = /language-(\w+)/.exec(className || '');
@@ -147,7 +163,7 @@ const BlogPostSection = () => {
                         </div>
                     </article>
                 )}
-            </Container>
+            </FadeContainer>
         </div>
     );
 };

@@ -1,24 +1,20 @@
-import { Link } from "@/types/generic";
-import { NextResponse } from "next/server";
+import { Link } from '@/types/generic';
+import { NextResponse } from 'next/server';
+import { Cache } from '@/lib/cache/cache';
 
-let linksCache: Link[] = [];
-
-async function getAllLinks() {
-    if (linksCache.length > 0) {
-        return linksCache;
-    }
-
-    try {
+const linksCache = new Cache<Link[]>({
+    maxSize: 100,
+    ttl: 1000 * 60 * 60,
+    evictionPolicy: 'lru',
+    staleWhileRevalidate: true,
+    revalidateInterval: 1000 * 60 * 5,
+    loader: async () => {
         const links = await import('@/assets/links/links.json');
-        linksCache = links.default;
-        return linksCache;
-    } catch (error) {
-        console.error('Error loading links:', error);
-        return [];
-    }
-}
+        return links.default;
+    },
+});
 
 export async function GET() {
-    const links = await getAllLinks();
+    const links = await linksCache.get('links');
     return NextResponse.json(links);
 }

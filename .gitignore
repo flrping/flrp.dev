@@ -43,3 +43,6 @@ next-env.d.ts
 # ide
 /.vscode/
 /.idea/
+
+# blog images
+/src/assets/blog/*/images/

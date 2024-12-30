@@ -4,4 +4,5 @@ export interface Post {
     date: Date;
     tags: string[];
     content: string;
+    banner: boolean;
 }

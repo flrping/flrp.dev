@@ -8,7 +8,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
         <div className='project-card'>
-            <Image src={`/${project.name}_Banner.png`} alt={`${project.name} Banner`} height={160} width={280} />
+            <Image src={`/${project.name}_Banner.png`} alt={`${project.name} Banner`} height={160} width={280} loading='lazy' />
             <a className='project-card-title' href={project.link} target='_blank'>
                 <h5>{project.name}</h5>
             </a>

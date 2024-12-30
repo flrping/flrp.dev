@@ -1,20 +1,16 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import type { Project } from '@/types/generic';
 import ProjectCard from '@/components/ui/ProjectCard';
 import SkeletonProjectCard from '../ui/SkeletonProjectCard';
+import { fetchProjects } from '@/lib/api/fetcher';
+import useSWR from 'swr';
+import { Project } from '@/types/generic';
 
 const ProjectsSection = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [projects, setProjects] = useState<Project[]>([]);
+    const { data, error, isLoading } = useSWR('/api/projects', fetchProjects);
 
-    useEffect(() => {
-        fetch('/api/projects')
-            .then((response) => response.json())
-            .then((data) => setProjects(data as Project[]))
-            .finally(() => setIsLoading(false));
-    }, []);
+    if (error) {
+        return <div>Error fetching projects</div>;
+    }
 
     return (
         <Container id='projects' style={{ paddingTop: '10rem', paddingBottom: '5rem', minHeight: '100vh' }}>
@@ -26,7 +22,7 @@ const ProjectsSection = () => {
                         </Col>
                     ))
                 ) : (
-                    projects.map((project) => (
+                    data.map((project: Project) => (
                         <Col key={project.name} className='d-flex justify-content-center mb-4'>
                             <ProjectCard project={project} />
                         </Col>

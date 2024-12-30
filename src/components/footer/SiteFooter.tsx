@@ -1,34 +1,25 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { Link } from "@/types/generic";
+import useSWR from 'swr';
+import { fetchLinks } from '@/lib/api/fetcher';
+import SocialIcon from '../ui/SocialIcon';
 
 const SiteFooter = () => {
-    const [links, setLinks] = useState<Link[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const { data } = useSWR('/api/links', () => fetchLinks());
 
-    useEffect(() => {
-        fetch('/api/links')
-            .then((response) => response.json())
-            .then((data) => setLinks(data as Link[]))
-            .finally(() => setIsLoading(false));
-    }, []);
+    const socialLinks = [
+        { name: 'GitHub', icon: 'github', link: data?.find((link) => link.name === 'GitHub')?.link || '#' },
+        { name: 'LinkedIn', icon: 'linkedin', link: data?.find((link) => link.name === 'LinkedIn')?.link || '#' },
+    ];
 
     return (
         <footer>
-            <div className="container py-4">
-                <div className="d-flex flex-column align-items-center">
-                    <div className="social-icons mb-3">
-                        {!isLoading && (
-                            <>
-                                <a href={links.find(link => link.name === 'GitHub')?.link} target="_blank" rel="noopener noreferrer" className="mx-2">
-                                    <i className="fa-brands fa-github fs-4" style={{color: 'var(--foreground-muted)'}}></i>
-                                </a>
-                                <a href={links.find(link => link.name === 'LinkedIn')?.link} target="_blank" rel="noopener noreferrer" className="mx-2">
-                                    <i className="fa-brands fa-linkedin fs-4" style={{color: 'var(--foreground-muted)'}}></i>
-                                </a>
-                            </>
-                        )}
+            <div className='container py-4'>
+                <div className='d-flex flex-column align-items-center'>
+                    <div className='social-icons mb-3'>
+                        {socialLinks.map(({ name, icon, link }) => (
+                            <SocialIcon key={name} icon={icon} link={link} />
+                        ))}
                     </div>
                     <small className='text-center opacity-50 m-0'>
                         Site by me. Built with Next.js, React, and Bootstrap.

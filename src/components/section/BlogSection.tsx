@@ -1,47 +1,61 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { Post } from '@/types/blog';
+import { useEffect, useState } from 'react';
 import BlogPreview from '@/components/ui/BlogPreview';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import SkeletonBlogPreview from '../ui/SkeletonBlogPreview';
+import useSWR from 'swr';
+import { fetchPosts } from '@/lib/api/fetcher';
+import { Post } from '@/types/blog';
 
 const BlogSection = () => {
     const [posts, setPosts] = useState<Post[]>([]);
+    const [more, setMore] = useState(true);
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
+
+    const { data, error, isLoading } = useSWR(`/api/posts?page=${page}`, () => fetchPosts(page));
 
     useEffect(() => {
-        if (isLoading || !hasMore) return;
+        if (data && more) {
+            setPosts((prev) => [...prev, ...data.posts]);
+            setMore(false);
+        }
+    }, [data, more]);
 
-        setIsLoading(true);
-        fetch(`/api/posts?page=${page}`)
-            .then((response) => response.json())
-            .then((data: { posts: Post[]; total: number; page: number; totalPages: number }) => {
-                setPosts((prevPosts) => [...prevPosts, ...data.posts]);
-                setHasMore(data.page < data.totalPages);
-                setPage(page + 1);
-            })
-            .finally(() => setIsLoading(false));
-    }, [page, isLoading, hasMore]);
+    if (error) {
+        return (
+            <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
+                <h1>Error fetching posts</h1>
+                <p>Please try again later.</p>
+            </div>
+        );
+    }
 
     return (
         <div>
-            <Container style={{ paddingTop: '10rem', paddingBottom: '5rem', minHeight: '100vh' }}>
+            <Container style={{ paddingTop: '10rem', paddingBottom: '5rem', minHeight: 'calc(100vh - 112px)' }}>
                 <h3 className='text-center mb-5'>BLOG</h3>
                 <Row xs={1} sm={1} md={2} className='g-4'>
-                    {isLoading
+                    {posts.length === 0 && isLoading
                         ? Array.from({ length: 4 }).map((_, index) => (
                               <Col key={index}>
                                   <SkeletonBlogPreview />
                               </Col>
                           ))
-                        : posts.map((post, index) => (
+                        : posts.map((post: Post, index: number) => (
                               <Col key={post.slug + index}>
                                   <BlogPreview post={post} />
                               </Col>
                           ))}
                 </Row>
+                <div className='d-flex justify-content-center mt-5'>
+                    <Button
+                        onClick={() => {
+                            setPage(page + 1);
+                            setMore(true);
+                        }}
+                    >
+                        Load More
+                    </Button>
+                </div>
             </Container>
         </div>
     );

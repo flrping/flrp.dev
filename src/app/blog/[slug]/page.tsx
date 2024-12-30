@@ -2,10 +2,20 @@ import SiteNavbar from '@/components/navbar/SiteNavbar';
 import SiteFooter from '@/components/footer/SiteFooter';
 import BlogPostSection from '@/components/section/BlogPostSection';
 import { Metadata } from 'next';
-import { getPost } from '@/app/api/posts/route';
+import { postsCache } from '@/lib/cache/impl/post';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const post = await getPost(params.slug);
+    const { slug } = await params;
+    const cacheData = await postsCache.get('posts');
+
+    if (!cacheData) {
+        return {
+            title: 'Post Not Found',
+            description: 'The requested blog post could not be found.',
+        };
+    }
+
+    const post = await cacheData.postsById.get(slug);
 
     if (!post) {
         return {
@@ -20,7 +30,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         openGraph: {
             title: post.title,
             description: post.content.slice(0, 150) + '...',
-            url: `/blog/${params.slug}`,
+            url: `/blog/${post.slug}`,
             type: 'article',
             publishedTime: post.date.toISOString(),
             tags: post.tags,
@@ -28,8 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-
-export default function Home() {
+export default function BlogPostPage() {
     return (
         <div>
             <SiteNavbar />

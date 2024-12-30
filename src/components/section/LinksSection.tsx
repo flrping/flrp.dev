@@ -4,30 +4,29 @@ import { Link } from '@/types/generic';
 import { Col, Container, Row } from 'react-bootstrap';
 import LinkCard from '../ui/LinkCard';
 import SkeletonLinkCard from '../ui/SkeletonLinkCard';
+import { fetchLinks } from '@/lib/api/fetcher';
+import useSWR from 'swr';
 
 const LinksSection = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [links, setLinks] = useState<Link[]>([]);
     const [itemsPerRow, setItemsPerRow] = useState(1);
 
-    useEffect(() => {
-        fetch('/api/links')
-            .then((response) => response.json())
-            .then((data) => setLinks(data as Link[]))
-            .finally(() => setIsLoading(false));
-    }, []);
+    const { data, error, isLoading } = useSWR('/api/links', fetchLinks);
 
     useEffect(() => {
+        if (!data) return;
         const updateItemsPerRow = () => {
             if (window.innerWidth >= 1400) setItemsPerRow(3);
             else if (window.innerWidth >= 768) setItemsPerRow(2);
             else setItemsPerRow(1);
         };
-
         updateItemsPerRow();
         window.addEventListener('resize', updateItemsPerRow);
         return () => window.removeEventListener('resize', updateItemsPerRow);
-    }, []);
+    }, [data]);
+
+    if (error) {
+        return <div>Error fetching links</div>;
+    }
 
     return (
         <div style={{ backgroundColor: 'var(--background-secondary)' }}>
@@ -41,9 +40,8 @@ const LinksSection = () => {
                             </Col>
                         ))
                     ) : (
-                        links.map((link, index) => {
-                            const isLastRow =
-                                index >= Math.ceil(links.length / itemsPerRow) * itemsPerRow - itemsPerRow;
+                        data.map((link: Link, index: number) => {
+                            const isLastRow = index >= Math.ceil(data.length / itemsPerRow) * itemsPerRow - itemsPerRow;
                             return (
                                 <Col key={link.name} className='mb-4'>
                                     <LinkCard link={link} />
