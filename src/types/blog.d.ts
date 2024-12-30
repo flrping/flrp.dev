@@ -1,7 +1,7 @@
 export interface Post {
     title: string;
     slug: string;
-    date: Date;
+    date: string;
     tags: string[];
     content: string;
     banner: boolean;

@@ -9,7 +9,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { formatDateTime } from '@/lib/time';
+import { formatDateForPath, parseAndNormalizeDate, formatDateTime } from '@/lib/time';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 import FadeContainer from '../ui/FadeContainer';
@@ -20,17 +20,11 @@ const BlogPostSection = () => {
 
     const linkDate = useMemo(() => {
         if (!post) return null;
-        return (date: Date) => {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const hour = String(date.getHours()).padStart(2, '0');
-            const minute = String(date.getMinutes()).padStart(2, '0');
-
-            return `${year}-${month}-${day}_${hour}-${minute}`;
+        return (dateString: string) => {
+            const normalizedDate = parseAndNormalizeDate(dateString);
+            return formatDateForPath(normalizedDate);
         };
     }, [post]);
-
 
     if (isLoading) {
         return (
@@ -43,7 +37,7 @@ const BlogPostSection = () => {
         );
     }
 
-    const formattedDate = !post ? null : formatDateTime(new Date(post.date));
+    const formattedDate = !post ? null : formatDateTime(post.date);
 
     return (
         <div>
@@ -62,12 +56,12 @@ const BlogPostSection = () => {
                             <div className='blog-post-banner'>
                                 <picture>
                                     <source
-                                        srcSet={`/api/posts/images?name=banner.webp&post=${linkDate(new Date(post.date))}`}
+                                        srcSet={`/api/posts/images?name=banner.webp&post=${linkDate(post.date)}`}
                                         type='image/webp'
                                     />
                                     <img
                                         className='blog-post-banner-image'
-                                        src={`/api/posts/images?name=banner.webp&post=${linkDate(new Date(post.date))}`}
+                                        src={`/api/posts/images?name=banner.webp&post=${linkDate(post.date)}`}
                                         alt='Banner'
                                     />
                                 </picture>
@@ -77,7 +71,7 @@ const BlogPostSection = () => {
                             <div className='d-flex flex-row align-items-center'>
                                 <h1 className='blog-post-title'>{post.title}</h1>
                                 <Link
-                                    href={`https://github.com/flrping/flrp.dev/blob/main/src/assets/blog/${linkDate(new Date(post.date))}/content.md`}
+                                    href={`https://github.com/flrping/flrp.dev/blob/main/src/assets/blog/${linkDate(post.date)}/content.md`}
                                     target='_blank'
                                     rel='noopener noreferrer'
                                     className='mx-2 ms-auto'
@@ -102,7 +96,7 @@ const BlogPostSection = () => {
                                 </Link>
                             </div>
                             <div className='blog-post-meta'>
-                                <time className='blog-post-date' dateTime={formattedDate?.isoString}>
+                                <time className='blog-post-date' dateTime={post.date}>
                                     {formattedDate?.date}
                                     {' at '}
                                     {formattedDate?.time}
@@ -128,11 +122,11 @@ const BlogPostSection = () => {
                                     img: ({ src, alt }) => (
                                         <picture>
                                             <source
-                                                srcSet={`/api/posts/images?name=${src}&post=${linkDate(new Date(post.date))}`}
+                                                srcSet={`/api/posts/images?name=${src}&post=${linkDate(post.date)}`}
                                                 type='image/webp'
                                             />
                                             <img
-                                                src={`/api/posts/images?name=${src}&post=${linkDate(new Date(post.date))}`}
+                                                src={`/api/posts/images?name=${src}&post=${linkDate(post.date)}`}
                                                 alt={alt}
                                             />
                                         </picture>

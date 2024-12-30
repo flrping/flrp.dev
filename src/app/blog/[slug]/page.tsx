@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
             description: post.content.slice(0, 150) + '...',
             url: `/blog/${post.slug}`,
             type: 'article',
-            publishedTime: post.date.toISOString(),
+            publishedTime: post.date,
             tags: post.tags,
         },
     };

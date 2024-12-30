@@ -1,7 +1,7 @@
 'use server';
 
-import { Post } from "@/types/blog";
-import path from "path";
+import { Post } from '@/types/blog';
+import path from 'path';
 import fs from 'fs/promises';
 
 const postLoader = async () => {
@@ -18,35 +18,35 @@ const postLoader = async () => {
         await Promise.all(
             directories.map(async (dir) => {
                 try {
-                const detailsPath = path.join(blogDir, dir, 'details.json');
-                const contentPath = path.join(blogDir, dir, 'content.md');
-                const bannerPath = path.join(blogDir, dir, 'images', 'banner.webp');
+                    const detailsPath = path.join(blogDir, dir, 'details.json');
+                    const contentPath = path.join(blogDir, dir, 'content.md');
+                    const bannerPath = path.join(blogDir, dir, 'images', 'banner.webp');
 
-                const [detailsContent, content, bannerExists] = await Promise.all([
-                    fs.readFile(detailsPath, 'utf-8'),
-                    fs.readFile(contentPath, 'utf-8'),
-                    fs
-                        .access(bannerPath)
-                        .then(() => true)
-                        .catch(() => false),
-                ]);
+                    const [detailsContent, content, bannerExists] = await Promise.all([
+                        fs.readFile(detailsPath, 'utf-8'),
+                        fs.readFile(contentPath, 'utf-8'),
+                        fs
+                            .access(bannerPath)
+                            .then(() => true)
+                            .catch(() => false),
+                    ]);
 
-                const details = JSON.parse(detailsContent);
-                const date = parseDirectoryDate(dir);
+                    const details = JSON.parse(detailsContent);
+                    const date = parseDirectoryDate(dir);
 
-                return {
-                    slug: details.slug,
-                    title: details.title,
-                    tags: details.tags,
-                    date,
-                    content,
-                    banner: bannerExists,
-                };
-            } catch (error) {
-                console.warn(`Skipping post ${dir} due to missing files:`, error);
-                return null;
-            }
-        }),
+                    return {
+                        slug: details.slug,
+                        title: details.title,
+                        tags: details.tags,
+                        date: date.toISOString(),
+                        content,
+                        banner: bannerExists,
+                    };
+                } catch (error) {
+                    console.warn(`Skipping post ${dir} due to missing files:`, error);
+                    return null;
+                }
+            }),
         )
     ).filter((post): post is Post => post !== null);
 
@@ -62,11 +62,7 @@ function parseDirectoryDate(dir: string) {
     const [year, month, day] = datePart.split('-');
     const [hour, minute] = timePart.split('-');
 
-    const date = new Date();
-    date.setFullYear(Number(year), Number(month) - 1, Number(day));
-    date.setHours(Number(hour), Number(minute), 0, 0);
-
-    return date;
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), 0, 0));
 }
 
 export default postLoader;
