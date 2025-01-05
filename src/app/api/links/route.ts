@@ -1,4 +1,4 @@
-import { Link } from '@/types/generic';
+import { Link } from '@/types/link';
 import { NextResponse } from 'next/server';
 import { Cache } from '@/lib/cache/cache';
 

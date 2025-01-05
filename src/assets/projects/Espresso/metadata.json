@@ -1,0 +1,11 @@
+{
+    "name": "Espresso",
+    "tags": ["Library", "Hooks", "Utility"],
+    "stack": ["Java"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/flrping/Espresso"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Craftidraw",
+    "tags": ["Website", "Whiteboard", "Planner"],
+    "stack": ["TypeScript", "Prisma", "Next.js", "tRPC", "T3"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/Craftidraw/craftidraw.com"
+        },
+        {
+            "name": "Website",
+            "url": "https://craftidraw.com"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Project Hydrius",
+    "tags": ["Game Server", "Microservice", "Membership"],
+    "stack": ["Java", "MySQL", "RabbitMQ", "Spring"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/Project-Hydrius"
+        },
+        {
+            "name": "Website",
+            "url": "https://hydrius.net"
+        }
+    ]
+}

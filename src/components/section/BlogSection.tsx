@@ -30,8 +30,8 @@ const BlogSection = () => {
     }
 
     return (
-        <div>
-            <Container style={{ paddingTop: '10rem', paddingBottom: '5rem', minHeight: 'calc(100vh - 112px)' }}>
+        <div style={{ minHeight: '100vh' }}>
+            <Container style={{ paddingTop: '10rem', paddingBottom: '5rem' }}>
                 <h3 className='text-center mb-5'>BLOG</h3>
                 <Row xs={1} sm={1} md={2} className='g-4'>
                     {posts.length === 0 && isLoading

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import type { Partner } from '@/types/generic';
+import type { Partner } from '@/types/partner';
 import { Cache } from '@/lib/cache/cache';
 
 const partnersCache = new Cache<Partner[]>({

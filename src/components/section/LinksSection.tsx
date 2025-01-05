@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from '@/types/generic';
+import { Link } from '@/types/link';
 import { Col, Container, Row } from 'react-bootstrap';
 import LinkCard from '../ui/LinkCard';
 import SkeletonLinkCard from '../ui/SkeletonLinkCard';
@@ -40,7 +40,7 @@ const LinksSection = () => {
                             </Col>
                         ))
                     ) : (
-                        data.map((link: Link, index: number) => {
+                        data?.map((link: Link, index: number) => {
                             const isLastRow = index >= Math.ceil(data.length / itemsPerRow) * itemsPerRow - itemsPerRow;
                             return (
                                 <Col key={link.name} className='mb-4'>

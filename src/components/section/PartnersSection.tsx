@@ -3,7 +3,7 @@ import PartnerCard from '../ui/PartnerCard';
 import SkeletonLinkCard from '../ui/SkeletonLinkCard';
 import useSWR from 'swr';
 import { fetchPartners } from '@/lib/api/fetcher';
-import { Partner } from '@/types/generic';
+import { Partner } from '@/types/partner';
 
 const PartnersSection = () => {
     const { data, error, isLoading } = useSWR('/api/partners', fetchPartners);

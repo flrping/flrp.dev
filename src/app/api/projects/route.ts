@@ -1,20 +1,17 @@
 import { NextResponse } from 'next/server';
-import type { Project } from '@/types/generic';
-import { Cache } from '@/lib/cache/cache';
-
-const projectsCache = new Cache<Project[]>({
-    maxSize: 100,
-    ttl: 1000 * 60 * 60,
-    evictionPolicy: 'lru',
-    staleWhileRevalidate: true,
-    revalidateInterval: 1000 * 60 * 5,
-    loader: async () => {
-        const projects = await import('@/assets/projects/projects.json');
-        return projects.default;
-    },
-});
+import { projectsCache } from '@/lib/cache/impl/project';
 
 export async function GET() {
-    const projects = await projectsCache.get('projects');
-    return NextResponse.json(projects);
+    try {
+        const projects = await projectsCache.get('projects');
+
+        if (!projects) {
+            return NextResponse.json({ projects: [] }, { status: 404 });
+        }
+
+        return NextResponse.json(projects.projects);
+    } catch (error) {
+        console.error(`Error fetching projects:`, error);
+        return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+    }
 }

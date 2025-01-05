@@ -1,4 +1,4 @@
-import type { Partner } from '@/types/generic';
+import type { Partner } from '@/types/partner';
     
 interface PartnerCardProps {
     partner: Partner;

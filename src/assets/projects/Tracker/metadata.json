@@ -1,0 +1,19 @@
+{
+    "name": "Tracker",
+    "tags": ["Plugin", "Free", "Paid"],
+    "stack": ["Java", "Guice"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/flrping/Tracker"
+        },
+        {
+            "name": "Download (Free)",
+            "url": "https://www.spigotmc.org/resources/tracker.90727/"
+        },
+        {
+            "name": "Download (Paid)",
+            "url": "https://www.spigotmc.org/resources/tracker.108425/"
+        }
+    ]
+}

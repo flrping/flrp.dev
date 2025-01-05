@@ -23,6 +23,12 @@ export interface PostsCacheData {
     lastUpdated: Date | null;
 }
 
+export interface ProjectsCacheData {
+    projects: Project[];
+    projectsByName: Map<string, Project>;
+    lastUpdated: Date | null;
+}
+
 export interface PostsResponse {
     posts: Post[];
     total: number;

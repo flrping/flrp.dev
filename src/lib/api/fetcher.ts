@@ -1,6 +1,8 @@
 import { Post } from "@/types/blog";
 import { PostsResponse } from "@/types/cache";
-import { Link, Partner, Project } from "@/types/generic";
+import { Partner } from "@/types/partner";
+import { Link } from "@/types/link";
+import { Project } from "@/types/project";
 
 async function fetchData<T>(endpoint: string): Promise<T> {
     const response = await fetch(endpoint);
@@ -22,8 +24,8 @@ export async function fetchProjects() {
     return fetchData('/api/projects') as Promise<Project[]>;
 }
 
-export async function fetchProject(slug: string) {
-    return fetchData(`/api/projects/${slug}`) as Promise<Project>;
+export async function fetchProject(name: string) {
+    return fetchData(`/api/projects/${name}`) as Promise<Project>;
 }
 
 export async function fetchLinks() {

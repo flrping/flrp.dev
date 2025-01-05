@@ -1,18 +1,13 @@
 'use client';
 
 import { fetchPost } from '@/lib/api/fetcher';
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { formatDateForPath, parseAndNormalizeDate, formatDateTime } from '@/lib/time';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 import FadeContainer from '../ui/FadeContainer';
+import fullRemark from '@/lib/remark/fullRemark';
 
 const BlogPostSection = () => {
     const { slug } = useParams();
@@ -114,46 +109,7 @@ const BlogPostSection = () => {
                         </header>
                         <hr className='blog-post-divider my-4' />
                         <div className='blog-post-body'>
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm, remarkMath]}
-                                rehypePlugins={[rehypeKatex]}
-                                components={{
-                                    h1: () => null,
-                                    img: ({ src, alt }) => (
-                                        <picture>
-                                            <source
-                                                srcSet={`/api/posts/images?name=${src}&post=${linkDate(post.date)}`}
-                                                type='image/webp'
-                                            />
-                                            <img
-                                                src={`/api/posts/images?name=${src}&post=${linkDate(post.date)}`}
-                                                alt={alt}
-                                            />
-                                        </picture>
-                                    ),
-                                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                                    code({ node, inline, className, children, ...props }) {
-                                        const match = /language-(\w+)/.exec(className || '');
-                                        return !inline && match ? (
-                                            <SyntaxHighlighter
-                                                style={theme}
-                                                language={match[1]}
-                                                PreTag='div'
-                                                className='blog-post-code-block'
-                                                {...props}
-                                            >
-                                                {String(children).replace(/\n$/, '')}
-                                            </SyntaxHighlighter>
-                                        ) : (
-                                            <code className={`blog-post-inline-code ${className || ''}`} {...props}>
-                                                {children}
-                                            </code>
-                                        );
-                                    },
-                                }}
-                            >
-                                {post.content}
-                            </ReactMarkdown>
+                            {fullRemark(post.content, `/api/posts/images`, { post: linkDate(post.date) })}
                         </div>
                     </article>
                 )}
