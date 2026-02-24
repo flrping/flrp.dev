@@ -1,0 +1,17 @@
+{
+    "name": "Curse of Empathy",
+    "tags": ["Game", "Action"],
+    "stack": ["Godot"],
+    "links": [
+        {
+            "name": "Itch.io",
+            "url": "https://flrp.itch.io/curse-of-empathy"
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/WyrmlingsDev/curse-of-the-empath"
+        }
+    ],
+    "month": 2,
+    "year": 2026
+}

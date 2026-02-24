@@ -1,0 +1,13 @@
+{
+    "name": "Rift Rewind",
+    "tags": ["AI", "League of Legends", "Insights"],
+    "stack": ["Next.js", "tRPC", "AWS", "Amazon Bedrock", "Prisma", "Tailwind CSS", "TypeScript"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/flrping/rift-hackathon"
+        }
+    ],
+    "month": 9,
+    "year": 2025
+}

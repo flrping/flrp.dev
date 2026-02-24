@@ -1,0 +1,13 @@
+{
+    "name": "Royal",
+    "tags": ["AI", "MCP", "Tool"],
+    "stack": ["Python", "MCP"],
+    "links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/flrping/royal"
+        }
+    ],
+    "month": 2,
+    "year": 2026
+}

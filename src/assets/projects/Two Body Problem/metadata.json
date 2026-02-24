@@ -1,0 +1,17 @@
+{
+    "name": "Two Body Problem",
+    "tags": ["Game", "Platformer"],
+    "stack": ["Godot"],
+    "links": [
+        {
+            "name": "Itch.io",
+            "url": "https://flrp.itch.io/two-body-problem-demo"
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/WyrmlingsDev/two-body-problem"
+        }
+    ],
+    "month": 10,
+    "year": 2025
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Dungeon Delvers",
+    "tags": ["Game", "Hack-and-Slash"],
+    "stack": ["Godot"],
+    "links": [
+        {
+            "name": "Itch.io",
+            "url": "https://flrp.itch.io/dungeon-delvers-demo"
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/WyrmlingsDev/dungeon-delvers"
+        }
+    ],
+    "month": 12,
+    "year": 2025
+}
