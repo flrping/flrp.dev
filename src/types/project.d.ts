@@ -5,6 +5,7 @@ export interface Project {
     links: ProjectLink[];
     description: string;
     year?: number;
+    month?: number;
 }
 
 export interface ProjectLink {

@@ -1,12 +1,37 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const SiteNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+            setTheme(savedTheme);
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            return;
+        }
+
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = systemPrefersDark ? 'dark' : 'light';
+
+        setTheme(initialTheme);
+        document.documentElement.setAttribute('data-theme', initialTheme);
+    }, []);
+
+    const toggleTheme = () => {
+        const nextTheme = theme === 'dark' ? 'light' : 'dark';
+
+        setTheme(nextTheme);
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+    };
 
     return (
-        <nav className='py-5 fixed top-0 left-0 right-0 z-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700'>
+        <nav className='py-5 fixed top-0 left-0 right-0 z-10 bg-(--surface) border border-(--border)'>
             <div className='max-w-7xl mx-auto px-[5%]'>
                 <div className='flex items-center justify-between text-(--accent)'>
                     <a href='/' className='text-lg hover:opacity-80'>
@@ -46,6 +71,14 @@ const SiteNavbar = () => {
                         >
                             DONATE
                         </a>
+                        <button
+                            type='button'
+                            className='hover:opacity-80'
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                        >
+                            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
+                        </button>
                     </div>
                 </div>
                 {isOpen && (
@@ -64,6 +97,14 @@ const SiteNavbar = () => {
                         >
                             DONATE
                         </a>
+                        <button
+                            type='button'
+                            className='hover:opacity-80'
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                        >
+                            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
+                        </button>
                     </div>
                 )}
             </div>

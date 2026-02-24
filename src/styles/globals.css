@@ -3,13 +3,81 @@
 @import 'tailwindcss';
 
 :root {
-    --accent: #ee8f8f;
-    --accent-darker: #e27f7f;
-    --accent-darkest: #db7474;
-    --accent-lighter: #f5a1a1;
-    --blog-text-color: #2f3236;
-    --blog-header-color: #212629;
+    --background: #f7efd9;
+    --surface: #fff8e8;
+    --surface-elevated: #f2e5c8;
+    --border: #d9c6a0;
+    --foreground: #3f3427;
+    --foreground-darker: #342a1f;
+    --foreground-muted: #7c6b52;
+
+    --accent: #d47a6b;
+    --accent-darker: #b65a4c;
+    --accent-darkest: #9f4538;
+    --accent-lighter: #e59b90;
+    --on-accent: #fff8e8;
+
+    --secondary: #c3ab87;
+    --secondary-dark: #a68c69;
+
+    --blog-text-color: var(--foreground);
+    --blog-header-color: var(--foreground-darker);
+
+    --skeleton-base: #ecdfc3;
+    --skeleton-highlight: #faf3e3;
     font-family: Poppins, sans-serif;
+}
+
+[data-theme='dark'] {
+    --background: #212529;
+    --surface: #252a30;
+    --surface-elevated: #2d333a;
+    --border: #3f4752;
+    --foreground: #e4e8ee;
+    --foreground-darker: #d3d9e2;
+    --foreground-muted: #a6afbb;
+
+    --accent: #d08679;
+    --accent-darker: #b76659;
+    --accent-darkest: #a35044;
+    --accent-lighter: #dda093;
+    --on-accent: #f8f9fb;
+
+    --secondary: #5d6672;
+    --secondary-dark: #515a65;
+
+    --blog-text-color: var(--foreground);
+    --blog-header-color: var(--foreground-darker);
+
+    --skeleton-base: #394049;
+    --skeleton-highlight: #2c3239;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --background: #212529;
+        --surface: #252a30;
+        --surface-elevated: #2d333a;
+        --border: #3f4752;
+        --foreground: #e4e8ee;
+        --foreground-darker: #d3d9e2;
+        --foreground-muted: #a6afbb;
+
+        --accent: #d08679;
+        --accent-darker: #b76659;
+        --accent-darkest: #a35044;
+        --accent-lighter: #dda093;
+        --on-accent: #f8f9fb;
+
+        --secondary: #5d6672;
+        --secondary-dark: #515a65;
+
+        --blog-text-color: var(--foreground);
+        --blog-header-color: var(--foreground-darker);
+
+        --skeleton-base: #394049;
+        --skeleton-highlight: #2c3239;
+    }
 }
 
 html,
@@ -20,6 +88,8 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    background-color: var(--background);
+    color: var(--foreground);
 }
 
 * {
@@ -90,16 +160,14 @@ body {
 }
 
 .skeleton {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 25%,
+        var(--skeleton-highlight) 50%,
+        var(--skeleton-base) 75%
+    );
     background-size: 1000px 100%;
     animation: shimmer 3s infinite linear;
-}
-
-@media (prefers-color-scheme: dark) {
-    .skeleton {
-        background: linear-gradient(90deg, #3a3a3a 25%, #2a2a2a 50%, #3a3a3a 75%);
-        background-size: 1000px 100%;
-    }
 }
 
 .skeleton-card {
@@ -234,7 +302,8 @@ body {
         color: var(--accent);
         margin-bottom: 5px;
         padding: 10px 20px;
-        @apply uppercase border-b border-b-neutral-200 dark:border-b-neutral-600 border-dotted;
+        border-bottom: 1px dotted var(--border);
+        @apply uppercase;
     }
 
     h3 {
@@ -277,8 +346,8 @@ body {
 
     code {
         padding: 2px 5px;
-        @apply bg-neutral-200 dark:bg-neutral-900;
+        background-color: var(--surface-elevated);
     }
 
-    @apply text-black dark:text-white;
+    color: var(--foreground);
 }

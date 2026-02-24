@@ -6,10 +6,10 @@ interface PartnerCardProps {
 
 const PartnerCard = ({ partner }: PartnerCardProps) => {
     return (
-        <div className='p-5 border border-neutral-200 dark:border-neutral-700 hover:bg-white dark:hover:bg-neutral-800 dark:bg-neutral-800 bg-white'>
+        <div className='p-5 border border-(--border) bg-(--surface) hover:bg-(--surface-elevated) transition-colors'>
             <h5 className='text-sm uppercase text-(--accent)'>{partner.name}</h5>
-            <p className='text-xs text-neutral-400 mt-1'>{partner.type}</p>
-            <a className='text-sm text-black dark:text-white mt-2 block' href={partner.link} target='_blank'>
+            <p className='text-xs text-(--foreground-muted) mt-1'>{partner.type}</p>
+            <a className='text-sm text-(--foreground) mt-2 block' href={partner.link} target='_blank'>
                 {partner.text}
             </a>
         </div>

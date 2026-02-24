@@ -23,7 +23,7 @@ export default function RootLayout({
                     referrerPolicy='no-referrer'
                 />
             </head>
-            <body className='bg-neutral-50 dark:bg-neutral-900'>{children}</body>
+            <body className='bg-(--background) text-(--foreground)'>{children}</body>
         </html>
     );
 }

@@ -39,6 +39,9 @@ const projectLoader = async () => {
         if (a.year !== b.year) {
             return (b.year ?? 0) - (a.year ?? 0);
         }
+        if (a.month !== b.month) {
+            return (b.month ?? 0) - (a.month ?? 0);
+        }
         return a.name.localeCompare(b.name);
     });
 

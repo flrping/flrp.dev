@@ -13,7 +13,7 @@ const SiteFooter = () => {
     ];
 
     return (
-        <footer className='min-h-28 bg-white dark:bg-neutral-800 text-black dark:text-white p-6'>
+        <footer className='min-h-28 bg-(--surface) text-(--foreground) p-6 border-t border-(--border)'>
             <div className='max-w-7xl mx-auto px-4 py-4'>
                 <div className='flex flex-col items-center'>
                     <div className='social-icons mb-3'>
