@@ -4,7 +4,7 @@ import BlogPostSection from '@/components/section/BlogPostSection';
 import { Metadata } from 'next';
 import { postsCache } from '@/lib/cache/impl/post';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const cacheData = await postsCache.get('posts');
 
