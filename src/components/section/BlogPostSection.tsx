@@ -35,7 +35,7 @@ const BlogPostSection = () => {
         <div>
             <FadeContainer isLoading={isLoading}>
                 {error || !post || !linkDate ? (
-                    <article className='blog-post mt-16'>
+                    <article className='blog-post mt-30'>
                         <h1 className='blog-post-title'>Post Not Found</h1>
                         <p>
                             We could not find the blog post you were looking for. It may have been removed or the URL is
@@ -43,7 +43,7 @@ const BlogPostSection = () => {
                         </p>
                     </article>
                 ) : (
-                    <article className='blog-post mt-8'>
+                    <article className='blog-post mt-20'>
                         {post.banner && (
                             <div className='blog-post-banner'>
                                 <picture>
