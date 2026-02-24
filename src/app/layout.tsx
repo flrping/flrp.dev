@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import '@/styles/globals.scss';
+import '@/styles/globals.css';
 import React from 'react';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
     title: 'flrp.dev',
@@ -15,12 +14,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <Script
-                src='https://kit.fontawesome.com/baba299d4a.js'
-                crossOrigin='anonymous'
-                strategy='afterInteractive'
-            />
-            <body>{children}</body>
+            <head>
+                <link
+                    rel='stylesheet'
+                    href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css'
+                    integrity='sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=='
+                    crossOrigin='anonymous'
+                    referrerPolicy='no-referrer'
+                />
+            </head>
+            <body className='bg-neutral-50 dark:bg-neutral-900'>{children}</body>
         </html>
     );
 }

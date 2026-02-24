@@ -23,10 +23,7 @@ const BlogPostSection = () => {
 
     if (isLoading) {
         return (
-            <div
-                className='d-flex justify-content-center align-items-center'
-                style={{ minHeight: 'calc(100vh - 112px)' }}
-            >
+            <div className='flex justify-center items-center min-h-[calc(100vh-112px)]'>
                 <div className='spinner-border' role='status'></div>
             </div>
         );
@@ -38,7 +35,7 @@ const BlogPostSection = () => {
         <div>
             <FadeContainer isLoading={isLoading}>
                 {error || !post || !linkDate ? (
-                    <article className='blog-post mt-5'>
+                    <article className='blog-post mt-16'>
                         <h1 className='blog-post-title'>Post Not Found</h1>
                         <p>
                             We could not find the blog post you were looking for. It may have been removed or the URL is
@@ -46,7 +43,7 @@ const BlogPostSection = () => {
                         </p>
                     </article>
                 ) : (
-                    <article className='blog-post mt-3'>
+                    <article className='blog-post mt-8'>
                         {post.banner && (
                             <div className='blog-post-banner'>
                                 <picture>
@@ -63,17 +60,17 @@ const BlogPostSection = () => {
                             </div>
                         )}
                         <header className='blog-post-header'>
-                            <div className='d-flex flex-row align-items-center'>
+                            <div className='flex flex-row items-center'>
                                 <h1 className='blog-post-title'>{post.title}</h1>
                                 <Link
                                     href={`https://github.com/flrping/flrp.dev/blob/main/src/assets/blog/${linkDate(post.date)}/content.md`}
                                     target='_blank'
                                     rel='noopener noreferrer'
-                                    className='mx-2 ms-auto'
+                                    className='mx-2 ml-auto'
                                     title='View post on GitHub'
                                 >
                                     <i
-                                        className='fa-brands fa-github fs-4'
+                                        className='fa-brands fa-github text-2xl'
                                         style={{ color: 'var(--foreground-muted)' }}
                                     ></i>
                                 </Link>
@@ -85,7 +82,7 @@ const BlogPostSection = () => {
                                     title='Share'
                                 >
                                     <i
-                                        className='fa-solid fa-share-nodes fs-4'
+                                        className='fa-solid fa-share-nodes text-2xl'
                                         style={{ color: 'var(--foreground-muted)' }}
                                     ></i>
                                 </Link>

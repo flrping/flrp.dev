@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import BlogPreview from '@/components/ui/BlogPreview';
-import { Button, Col, Container, Row } from 'react-bootstrap';
 import SkeletonBlogPreview from '../ui/SkeletonBlogPreview';
 import useSWR from 'swr';
 import { fetchPosts } from '@/lib/api/fetcher';
@@ -22,41 +21,44 @@ const BlogSection = () => {
 
     if (error) {
         return (
-            <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
-                <h1>Error fetching posts</h1>
-                <p>Please try again later.</p>
+            <div className='flex justify-center items-center h-screen'>
+                <div className='text-center'>
+                    <h1>Error fetching posts</h1>
+                    <p>Please try again later.</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div style={{ minHeight: '100vh' }}>
-            <Container style={{ paddingTop: '10rem', paddingBottom: '5rem' }}>
-                <h3 className='text-center mb-5'>BLOG</h3>
-                <Row xs={1} sm={1} md={2} className='g-4'>
+        <div className='min-h-screen'>
+            <div className='max-w-7xl mx-auto px-4 pt-[10rem] pb-[5rem]'>
+                <h3 className='text-center mb-[3rem] uppercase'>BLOG</h3>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     {posts.length === 0 && isLoading
                         ? Array.from({ length: 4 }).map((_, index) => (
-                              <Col key={index}>
+                              <div key={index}>
                                   <SkeletonBlogPreview />
-                              </Col>
+                              </div>
                           ))
                         : posts.map((post: Post, index: number) => (
-                              <Col key={post.slug + index}>
+                              <div key={post.slug + index}>
                                   <BlogPreview post={post} />
-                              </Col>
+                              </div>
                           ))}
-                </Row>
-                <div className='d-flex justify-content-center mt-5'>
-                    <Button
+                </div>
+                <div className='flex justify-center mt-[3rem]'>
+                    <button
+                        className='btn btn-primary'
                         onClick={() => {
                             setPage(page + 1);
                             setMore(true);
                         }}
                     >
                         Load More
-                    </Button>
+                    </button>
                 </div>
-            </Container>
+            </div>
         </div>
     );
 };

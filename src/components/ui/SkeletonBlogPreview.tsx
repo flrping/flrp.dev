@@ -1,6 +1,6 @@
 const SkeletonBlogPreview = () => {
     return (
-        <div className='skeleton-card w-100'>
+        <div className='p-5 border border-neutral-200 dark:border-neutral-700'>
             <div className='skeleton skeleton-body m-0'></div>
         </div>
     );

@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@import 'tailwindcss';
+
+:root {
+    --accent: #ee8f8f;
+    --accent-darker: #e27f7f;
+    --accent-darkest: #db7474;
+    --accent-lighter: #f5a1a1;
+    --blog-text-color: #2f3236;
+    --blog-header-color: #212629;
+    font-family: Poppins, sans-serif;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+}
+
+.spinner-border {
+    color: var(--accent);
+    width: 2rem;
+    height: 2rem;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.btn {
+    font-size: 12px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent-darker);
+    transition: background-color 0.3s ease-in-out;
+
+    &.btn-primary {
+        background-color: var(--accent);
+        color: var(--background);
+
+        &:hover {
+            background-color: var(--accent-darker);
+        }
+
+        &:focus {
+            box-shadow: var(--accent-darker) 0 0 0 0.25rem;
+        }
+
+        &:disabled,
+        &.disabled {
+            background-color: var(--secondary);
+            border-color: var(--secondary-dark);
+        }
+    }
+}
+
+.link-divider {
+    border: var(--accent-darker) 1px dotted;
+    opacity: 0.5;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite linear;
+}
+
+@media (prefers-color-scheme: dark) {
+    .skeleton {
+        background: linear-gradient(90deg, #3a3a3a 25%, #2a2a2a 50%, #3a3a3a 75%);
+        background-size: 1000px 100%;
+    }
+}
+
+.skeleton-card {
+    width: 280px;
+    overflow: hidden;
+}
+
+.skeleton-image {
+    height: 160px;
+    width: 100%;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 70%;
+    margin: 15px 0;
+}
+
+.skeleton-tag {
+    height: 16px;
+    width: 50%;
+    margin: 10px 0;
+}
+
+.skeleton-stack {
+    height: 16px;
+    width: 60%;
+    margin: 10px 0;
+}
+
+.skeleton-link {
+    height: 16px;
+    width: 60%;
+    margin: 10px 0;
+}
+
+.skeleton-type {
+    height: 16px;
+    width: 50%;
+    margin: 10px 0;
+}
+
+.skeleton-body {
+    height: 200px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.blog-post-header {
+    padding-top: 15px;
+}
+
+.blog-post-title {
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.blog-post-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-post-date {
+    font-size: 12px;
+    font-weight: normal;
+    color: var(--foreground-darker);
+}
+
+.blog-post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-top: 15px;
+}
+
+.blog-post-tag {
+    background-color: var(--accent);
+    color: var(--background);
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.blog-post-divider {
+    border: var(--foreground-darker) 1px solid;
+    opacity: 0.3;
+}
+
+.blog-post-banner {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: -15px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 150%;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 20%,
+            color-mix(in srgb, var(--background) 20%, transparent) 40%,
+            color-mix(in srgb, var(--background) 40%, transparent) 60%,
+            color-mix(in srgb, var(--background) 70%, transparent) 80%,
+            var(--background) 95%,
+            var(--background) 100%
+        );
+        pointer-events: none;
+    }
+}
+
+.blog-post-banner-image {
+    width: 100%;
+    height: 20vh;
+    object-fit: cover;
+    object-position: center;
+    mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+}
+
+.blog-post-body,
+.project-details-body {
+    padding: 15px;
+    font-weight: 300;
+
+    h2 {
+        font-size: 1.75rem;
+        color: var(--accent);
+        margin-bottom: 5px;
+        padding: 10px 20px;
+        @apply uppercase border-b border-b-neutral-200 dark:border-b-neutral-600 border-dotted;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        color: var(--accent-darker);
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--accent);
+        font-weight: 500;
+        padding: 0 15px;
+    }
+
+    strong {
+        color: var(--accent-darker);
+    }
+
+    p {
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+
+    em {
+        color: var(--accent-darkest);
+    }
+
+    ol li ul > li {
+        list-style-type: disc;
+        padding: 0 15px;
+    }
+
+    ul > li {
+        margin-bottom: 10px;
+        padding: 0 15px;
+    }
+
+    code {
+        padding: 2px 5px;
+        @apply bg-neutral-200 dark:bg-neutral-900;
+    }
+
+    @apply text-black dark:text-white;
+}

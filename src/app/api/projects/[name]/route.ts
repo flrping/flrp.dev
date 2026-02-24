@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
 import { projectsCache } from '@/lib/cache/impl/project';
 
-export async function GET(request: Request, { params }: { params: { name: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ name: string }> }) {
     try {
+        const { name } = await params;
         const cacheData = await projectsCache.get('projects');
 
         if (!cacheData) {
             return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
         }
 
-        const project = cacheData.projectsByName.get(params.name);
+        const project = cacheData.projectsByName.get(name);
 
         if (!project) {
             return NextResponse.json({ error: 'Project not found' }, { status: 404 });

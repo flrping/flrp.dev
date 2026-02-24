@@ -13,16 +13,16 @@ const SiteFooter = () => {
     ];
 
     return (
-        <footer>
-            <div className='container py-4'>
-                <div className='d-flex flex-column align-items-center'>
+        <footer className='min-h-28 bg-white dark:bg-neutral-800 text-black dark:text-white p-6'>
+            <div className='max-w-7xl mx-auto px-4 py-4'>
+                <div className='flex flex-col items-center'>
                     <div className='social-icons mb-3'>
                         {socialLinks.map(({ name, icon, link }) => (
                             <SocialIcon key={name} icon={icon} link={link} />
                         ))}
                     </div>
                     <small className='text-center opacity-50 m-0'>
-                        Site by me. Built with Next.js, React, and Bootstrap.
+                        Site by me. Built with Next.js, React, and Tailwind CSS.
                     </small>
                 </div>
             </div>

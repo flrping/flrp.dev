@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-
-import { useState } from "react";
-import { Container } from "react-bootstrap";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 
 interface FadeContainerProps {
     isLoading: boolean;
@@ -21,22 +19,21 @@ const FadeContainer = ({ isLoading, children }: FadeContainerProps) => {
     }, [isLoading]);
 
     return (
-        <Container
-            className='position-relative'
+        <div
+            className='max-w-7xl mx-auto px-4 relative min-h-[calc(100vh-112px)]'
             style={{
-                minHeight: 'calc(100vh - 112px)',
                 opacity: shouldRender ? 1 : 0,
                 transition: 'opacity 0.5s ease-in-out',
             }}
         >
             {isLoading ? (
-                <div className='position-absolute top-50 start-50 translate-middle'>
+                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                     <div className='spinner-border' role='status' />
                 </div>
             ) : (
                 children
             )}
-        </Container>
+        </div>
     );
 };
 

@@ -1,4 +1,4 @@
-  {
+{
     "name": "Economobs",
     "tags": ["Plugin", "Free"],
     "stack": ["Java", "SQLite", "Guice"],
@@ -23,5 +23,6 @@
             "name": "Wiki",
             "url": "https://wiki.flrp.dev/free/economobs"
         }
-    ]
-  }
+    ],
+    "year": 2021
+}

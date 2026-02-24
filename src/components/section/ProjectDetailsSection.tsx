@@ -2,7 +2,6 @@ import { fetchProject } from '@/lib/api/fetcher';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import FadeContainer from '../ui/FadeContainer';
-import { Col, Row } from 'react-bootstrap';
 import fullRemark from '@/lib/remark/fullRemark';
 import Link from 'next/link';
 
@@ -14,51 +13,48 @@ const ProjectDetailsSection = () => {
 
     if (isLoading) {
         return (
-            <div
-                className='d-flex justify-content-center align-items-center'
-                style={{ minHeight: 'calc(100vh - 112px)' }}
-            >
+            <div className='flex justify-center items-center min-h-[calc(100vh-112px)]'>
                 <div className='spinner-border' role='status'></div>
             </div>
         );
     }
 
     return (
-        <div style={{ minHeight: '100vh' }}>
+        <div className='min-h-screen'>
             <FadeContainer isLoading={isLoading}>
-                <div className='project-details-container mt-5'>
-                    <Row>
-                        <h1 className='project-details-title'>{data?.name}</h1>
-                        <Col className='project-details-col-left' md={3}>
-                            <div className='project-details-meta'>
-                                <h5>Stack</h5>
-                                <p className='project-details-stack'>{data?.stack.join(', ')}</p>
-                                <h5>Tags</h5>
-                                <p className='project-details-tags'>{data?.tags.join(', ')}</p>
+                <div className='mt-30'>
+                    <div className='flex flex-col md:flex-row gap-4'>
+                        <div className='w-full md:w-1/4'>
+                            <div className='bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-6'>
+                                <h1 className='uppercase text-xl text-(--accent)'>{data?.name}</h1>
+                                <h5 className='text-(--accent) mt-5'>Stack</h5>
+                                <p className='text-sm mt-1 text-black dark:text-white'>{data?.stack.join(', ')}</p>
+                                <h5 className='text-(--accent) mt-5'>Tags</h5>
+                                <p className='text-sm mt-1 text-black dark:text-white'>{data?.tags.join(', ')}</p>
                             </div>
-                            <div className='project-details-links mt-3'>
+                            <div className='grid grid-cols-1 gap-2 mt-2'>
                                 {data?.links.map((link) => (
                                     <Link
-                                        className='project-details-link'
+                                        className='bg-(--accent) w-full border border-(--accent-darker) px-5 py-2 font-light text-black dark:text-white'
                                         key={link.name}
                                         href={link.url}
                                         target='_blank'
                                         rel='noopener noreferrer'
                                     >
                                         {link.name}
-                                        <i className='fa-solid fa-arrow-up-right-from-square'></i>
+                                        <i className='fa-solid fa-arrow-up-right-from-square ml-2'></i>
                                     </Link>
                                 ))}
                             </div>
-                        </Col>
-                        <Col className='project-details-col-right' md={9}>
+                        </div>
+                        <div className='w-full md:w-3/4 p-4 border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800'>
                             <div className='project-details-body'>
                                 {fullRemark(data?.description || '', `/api/projects/images`, {
                                     project: name as string,
                                 })}
                             </div>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
             </FadeContainer>
         </div>

@@ -1,57 +1,34 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { Link } from '@/types/link';
-import { Col, Container, Row } from 'react-bootstrap';
 import LinkCard from '../ui/LinkCard';
 import SkeletonLinkCard from '../ui/SkeletonLinkCard';
 import { fetchLinks } from '@/lib/api/fetcher';
 import useSWR from 'swr';
 
 const LinksSection = () => {
-    const [itemsPerRow, setItemsPerRow] = useState(1);
-
     const { data, error, isLoading } = useSWR('/api/links', fetchLinks);
-
-    useEffect(() => {
-        if (!data) return;
-        const updateItemsPerRow = () => {
-            if (window.innerWidth >= 1400) setItemsPerRow(3);
-            else if (window.innerWidth >= 768) setItemsPerRow(2);
-            else setItemsPerRow(1);
-        };
-        updateItemsPerRow();
-        window.addEventListener('resize', updateItemsPerRow);
-        return () => window.removeEventListener('resize', updateItemsPerRow);
-    }, [data]);
 
     if (error) {
         return <div>Error fetching links</div>;
     }
 
     return (
-        <div style={{ backgroundColor: 'var(--background-secondary)' }}>
-            <Container id='links' style={{ paddingTop: '5rem', paddingBottom: '5rem', minHeight: '20vh' }}>
-                <h3 className='text-center mb-5'>LINKS</h3>
-                <Row xs={1} sm={1} md={2} xxl={3}>
-                    {isLoading ? (
-                        Array.from({ length: 6 }).map((_, index) => (
-                            <Col key={index} className='d-flex justify-content-center mb-4'>
-                                <SkeletonLinkCard />
-                            </Col>
-                        ))
-                    ) : (
-                        data?.map((link: Link, index: number) => {
-                            const isLastRow = index >= Math.ceil(data.length / itemsPerRow) * itemsPerRow - itemsPerRow;
-                            return (
-                                <Col key={link.name} className='mb-4'>
-                                    <LinkCard link={link} />
-                                    {!isLastRow && <hr className='link-divider' />}
-                                </Col>
-                            );
-                        })
-                    )}
-                </Row>
-            </Container>
+        <div className='py-10'>
+            <div id='links' className='max-w-7xl mx-auto px-4 min-h-[20vh]'>
+                <h1 className='text-center mb-5 text-(--accent) text-xl uppercase'>LINKS</h1>
+                <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 justify-items-center'>
+                    {isLoading
+                        ? Array.from({ length: 6 }).map((_, index) => (
+                              <div key={index} className='w-full'>
+                                  <SkeletonLinkCard />
+                              </div>
+                          ))
+                        : data?.map((link: Link) => (
+                              <div key={link.name} className='w-full'>
+                                  <LinkCard link={link} />
+                              </div>
+                          ))}
+                </div>
+            </div>
         </div>
     );
 };

@@ -13,31 +13,32 @@ const BlogPreview = ({ post }: BlogPreviewProps) => {
     const formattedDate = formatDateTime(post.date);
 
     return (
-        <div className='blog-preview d-flex flex-column'>
-            <Link href={`/blog/${post.slug}`} className='no-underline flex-grow-1 d-flex flex-column'>
-                <h2 className='blog-preview-title'>{post.title}</h2>
-                <div className='blog-preview-content flex-grow-1'>{previewRemark(previewContent)}</div>
-                <div className='blog-preview-footer'>
+        <Link href={`/blog/${post.slug}`} className='flex flex-col'>
+            <div className='p-5 border border-neutral-200 dark:border-neutral-700 hover:bg-white dark:hover:bg-neutral-800 dark:bg-neutral-800 bg-white h-full'>
+                <h2 className='text-xl text-(--accent)'>{post.title}</h2>
+                <div className='mt-3 flex-1 text-sm text-black dark:text-white opacity-80'>
+                    {previewRemark(previewContent)}
+                </div>
+                <div className='mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-700 flex items-center gap-2'>
                     {post.tags && (
-                        <div className='blog-preview-tags'>
+                        <div className='flex flex-wrap gap-1'>
                             {post.tags.map((tag, index) => (
-                                <span key={tag + index} className='blog-preview-tag'>
+                                <span key={tag + index} className='bg-(--accent) px-2 py-1 text-[10px] text-white'>
                                     {tag}
                                 </span>
                             ))}
                         </div>
                     )}
                     {post.date && (
-                        <div className='blog-preview-date ms-auto'>
-                            Posted on{' '}
+                        <div className='ml-auto text-xs text-neutral-400'>
                             <time dateTime={formattedDate.isoString}>{formattedDate.date}</time>
                             {' at '}
                             <time dateTime={formattedDate.isoString}>{formattedDate.time}</time>
                         </div>
                     )}
                 </div>
-            </Link>
-        </div>
+            </div>
+        </Link>
     );
 };
 

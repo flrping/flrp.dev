@@ -35,6 +35,13 @@ const projectLoader = async () => {
         )
     ).filter((project): project is Project => project !== null);
 
+    projects.sort((a, b) => {
+        if (a.year !== b.year) {
+            return (b.year ?? 0) - (a.year ?? 0);
+        }
+        return a.name.localeCompare(b.name);
+    });
+
     return {
         projects,
         projectsByName: new Map(projects.map((project) => [project.name, project])),
