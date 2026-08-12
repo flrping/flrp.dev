@@ -4,7 +4,7 @@
 
 As a developer of open-source projects accessible to a global audience, I've taken responsibility for any users that require support. While a majority of users are from the United States, there is also a considerable amount from other countries such as Germany, France, and others.
 
-While this has been a rewarding experience, it hasn't been without its challenges—particularly when it comes to supporting users across language barriers.
+While this has been a rewarding experience, it hasn't been without its challenges-particularly when it comes to supporting users across language barriers.
 
 ## Current Situation
 
@@ -19,17 +19,17 @@ By analyzing which versions are predominantly used and examining download-to-usa
 ### Key Issues Identified
 
 1. **Migration Difficulties**
-    - Updating to the latest version can be daunting, due to the complexity and structure
-    - Especially challenging if the process isn't in the user's language
+    - Updating to the latest version can be daunting, due to the complexity and structure.
+    - Especially challenging if the process isn't in the user's language.
 2. **Complexity vs. Use-Case**
-    - The newer version might introduce features that are unnecessary or overly complex for certain users' needs
-    - Leading them to prefer simpler, older versions
+    - The newer version might introduce features that are unnecessary or overly complex for certain users' needs.
+    - Leading them to prefer simpler, older versions.
 3. **Language Barriers**
-    - Users may avoid updates due to a lack of understanding of the new format and features
-    - Exacerbated by language differences
+    - Users may avoid updates due to a lack of understanding of the new format and features.
+    - Exacerbated by language differences.
 4. **Visibility of Updates**
-    - Some users might simply miss update notifications
-    - Leading them to continue using older versions unintentionally
+    - Some users might simply miss update notifications.
+    - Leading them to continue using older versions unintentionally.
 
 ## Importance of Data Collection
 
